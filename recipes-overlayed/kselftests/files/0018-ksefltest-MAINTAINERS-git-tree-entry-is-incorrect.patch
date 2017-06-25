@@ -1,0 +1,30 @@
+From 59a14459c59b542e38eef595ffd354bcc3659eac Mon Sep 17 00:00:00 2001
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Date: Fri, 9 Jun 2017 08:13:48 +0200
+Subject: [PATCH 18/50] ksefltest: MAINTAINERS git tree entry is incorrect
+
+There is a few more subdirectories needed in the git tree path for the
+linux-kselftest url in order to be able to properly clone it.
+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shuah Khan <shuahkh@osg.samsung.com>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7888ae1..f3bb488 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -7244,7 +7244,7 @@ KERNEL SELFTEST FRAMEWORK
+ M:	Shuah Khan <shuahkh@osg.samsung.com>
+ M:	Shuah Khan <shuah@kernel.org>
+ L:	linux-kselftest@vger.kernel.org
+-T:	git git://git.kernel.org/pub/scm/shuah/linux-kselftest
++T:	git git://git.kernel.org/pub/scm/linux/kernel/git/shuah/linux-kselftest.git
+ S:	Maintained
+ F:	tools/testing/selftests
+ 
+-- 
+2.7.4
+

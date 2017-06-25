@@ -1,0 +1,269 @@
+From 892ffcbfb2b932359deba005622a0d2edf5dd912 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Date: Fri, 26 May 2017 20:43:59 +0200
+Subject: [PATCH 06/50] Documentation/dev-tools: Add kselftest
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Move kselftest.txt to dev-tools/kselftest.rst .
+
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Acked-by: Kees Cook <keescook@chromium.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Shuah Khan <shuahkh@osg.samsung.com>
+---
+ Documentation/00-INDEX                |   2 -
+ Documentation/dev-tools/kselftest.rst | 109 ++++++++++++++++++++++++++++++++++
+ Documentation/kselftest.txt           | 109 ----------------------------------
+ 3 files changed, 109 insertions(+), 111 deletions(-)
+ create mode 100644 Documentation/dev-tools/kselftest.rst
+ delete mode 100644 Documentation/kselftest.txt
+
+diff --git a/Documentation/00-INDEX b/Documentation/00-INDEX
+index ed3e5e9..6daf515 100644
+--- a/Documentation/00-INDEX
++++ b/Documentation/00-INDEX
+@@ -246,8 +246,6 @@ kprobes.txt
+ 	- documents the kernel probes debugging feature.
+ kref.txt
+ 	- docs on adding reference counters (krefs) to kernel objects.
+-kselftest.txt
+-	- small unittests for (some) individual codepaths in the kernel.
+ laptops/
+ 	- directory with laptop related info and laptop driver documentation.
+ ldm.txt
+diff --git a/Documentation/dev-tools/kselftest.rst b/Documentation/dev-tools/kselftest.rst
+new file mode 100644
+index 0000000..5bd5903
+--- /dev/null
++++ b/Documentation/dev-tools/kselftest.rst
+@@ -0,0 +1,109 @@
++Linux Kernel Selftests
++
++The kernel contains a set of "self tests" under the tools/testing/selftests/
++directory. These are intended to be small tests to exercise individual code
++paths in the kernel. Tests are intended to be run after building, installing
++and booting a kernel.
++
++On some systems, hot-plug tests could hang forever waiting for cpu and
++memory to be ready to be offlined. A special hot-plug target is created
++to run full range of hot-plug tests. In default mode, hot-plug tests run
++in safe mode with a limited scope. In limited mode, cpu-hotplug test is
++run on a single cpu as opposed to all hotplug capable cpus, and memory
++hotplug test is run on 2% of hotplug capable memory instead of 10%.
++
++Running the selftests (hotplug tests are run in limited mode)
++=============================================================
++
++To build the tests:
++  $ make -C tools/testing/selftests
++
++
++To run the tests:
++  $ make -C tools/testing/selftests run_tests
++
++To build and run the tests with a single command, use:
++  $ make kselftest
++
++- note that some tests will require root privileges.
++
++
++Running a subset of selftests
++========================================
++You can use the "TARGETS" variable on the make command line to specify
++single test to run, or a list of tests to run.
++
++To run only tests targeted for a single subsystem:
++  $  make -C tools/testing/selftests TARGETS=ptrace run_tests
++
++You can specify multiple tests to build and run:
++  $  make TARGETS="size timers" kselftest
++
++See the top-level tools/testing/selftests/Makefile for the list of all
++possible targets.
++
++
++Running the full range hotplug selftests
++========================================
++
++To build the hotplug tests:
++  $ make -C tools/testing/selftests hotplug
++
++To run the hotplug tests:
++  $ make -C tools/testing/selftests run_hotplug
++
++- note that some tests will require root privileges.
++
++
++Install selftests
++=================
++
++You can use kselftest_install.sh tool installs selftests in default
++location which is tools/testing/selftests/kselftest or a user specified
++location.
++
++To install selftests in default location:
++   $ cd tools/testing/selftests
++   $ ./kselftest_install.sh
++
++To install selftests in a user specified location:
++   $ cd tools/testing/selftests
++   $ ./kselftest_install.sh install_dir
++
++Running installed selftests
++===========================
++
++Kselftest install as well as the Kselftest tarball provide a script
++named "run_kselftest.sh" to run the tests.
++
++You can simply do the following to run the installed Kselftests. Please
++note some tests will require root privileges.
++
++cd kselftest
++./run_kselftest.sh
++
++Contributing new tests
++======================
++
++In general, the rules for selftests are
++
++ * Do as much as you can if you're not root;
++
++ * Don't take too long;
++
++ * Don't break the build on any architecture, and
++
++ * Don't cause the top-level "make run_tests" to fail if your feature is
++   unconfigured.
++
++Contributing new tests(details)
++===============================
++
++ * Use TEST_GEN_XXX if such binaries or files are generated during
++   compiling.
++   TEST_PROGS, TEST_GEN_PROGS mean it is the excutable tested by
++   default.
++   TEST_PROGS_EXTENDED, TEST_GEN_PROGS_EXTENDED mean it is the
++   executable which is not tested by default.
++   TEST_FILES, TEST_GEN_FILES mean it is the file which is used by
++   test.
+diff --git a/Documentation/kselftest.txt b/Documentation/kselftest.txt
+deleted file mode 100644
+index 5bd5903..0000000
+--- a/Documentation/kselftest.txt
++++ /dev/null
+@@ -1,109 +0,0 @@
+-Linux Kernel Selftests
+-
+-The kernel contains a set of "self tests" under the tools/testing/selftests/
+-directory. These are intended to be small tests to exercise individual code
+-paths in the kernel. Tests are intended to be run after building, installing
+-and booting a kernel.
+-
+-On some systems, hot-plug tests could hang forever waiting for cpu and
+-memory to be ready to be offlined. A special hot-plug target is created
+-to run full range of hot-plug tests. In default mode, hot-plug tests run
+-in safe mode with a limited scope. In limited mode, cpu-hotplug test is
+-run on a single cpu as opposed to all hotplug capable cpus, and memory
+-hotplug test is run on 2% of hotplug capable memory instead of 10%.
+-
+-Running the selftests (hotplug tests are run in limited mode)
+-=============================================================
+-
+-To build the tests:
+-  $ make -C tools/testing/selftests
+-
+-
+-To run the tests:
+-  $ make -C tools/testing/selftests run_tests
+-
+-To build and run the tests with a single command, use:
+-  $ make kselftest
+-
+-- note that some tests will require root privileges.
+-
+-
+-Running a subset of selftests
+-========================================
+-You can use the "TARGETS" variable on the make command line to specify
+-single test to run, or a list of tests to run.
+-
+-To run only tests targeted for a single subsystem:
+-  $  make -C tools/testing/selftests TARGETS=ptrace run_tests
+-
+-You can specify multiple tests to build and run:
+-  $  make TARGETS="size timers" kselftest
+-
+-See the top-level tools/testing/selftests/Makefile for the list of all
+-possible targets.
+-
+-
+-Running the full range hotplug selftests
+-========================================
+-
+-To build the hotplug tests:
+-  $ make -C tools/testing/selftests hotplug
+-
+-To run the hotplug tests:
+-  $ make -C tools/testing/selftests run_hotplug
+-
+-- note that some tests will require root privileges.
+-
+-
+-Install selftests
+-=================
+-
+-You can use kselftest_install.sh tool installs selftests in default
+-location which is tools/testing/selftests/kselftest or a user specified
+-location.
+-
+-To install selftests in default location:
+-   $ cd tools/testing/selftests
+-   $ ./kselftest_install.sh
+-
+-To install selftests in a user specified location:
+-   $ cd tools/testing/selftests
+-   $ ./kselftest_install.sh install_dir
+-
+-Running installed selftests
+-===========================
+-
+-Kselftest install as well as the Kselftest tarball provide a script
+-named "run_kselftest.sh" to run the tests.
+-
+-You can simply do the following to run the installed Kselftests. Please
+-note some tests will require root privileges.
+-
+-cd kselftest
+-./run_kselftest.sh
+-
+-Contributing new tests
+-======================
+-
+-In general, the rules for selftests are
+-
+- * Do as much as you can if you're not root;
+-
+- * Don't take too long;
+-
+- * Don't break the build on any architecture, and
+-
+- * Don't cause the top-level "make run_tests" to fail if your feature is
+-   unconfigured.
+-
+-Contributing new tests(details)
+-===============================
+-
+- * Use TEST_GEN_XXX if such binaries or files are generated during
+-   compiling.
+-   TEST_PROGS, TEST_GEN_PROGS mean it is the excutable tested by
+-   default.
+-   TEST_PROGS_EXTENDED, TEST_GEN_PROGS_EXTENDED mean it is the
+-   executable which is not tested by default.
+-   TEST_FILES, TEST_GEN_FILES mean it is the file which is used by
+-   test.
+-- 
+2.7.4
+

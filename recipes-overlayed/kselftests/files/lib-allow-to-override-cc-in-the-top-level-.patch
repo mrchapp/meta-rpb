@@ -1,15 +1,18 @@
-From 2e93b68257aa88ccdc127ca119304a5f4c76b7c5 Mon Sep 17 00:00:00 2001
+From 602dcfaad8cdc014004e5268064f81a4616aeecf Mon Sep 17 00:00:00 2001
 From: Fathi Boudra <fathi.boudra@linaro.org>
 Date: Wed, 22 Mar 2017 17:36:53 +0200
-Subject: [PATCH] selftests: lib: allow to override CC in the top-level Makefile
+Subject: [PATCH] selftests: lib: allow to override CC in the top-level
+ Makefile
 
 Relax CC assignment to allow to override CC in the top-level Makefile.
 
 Signed-off-by: Denys Dmytriyenko <denys@ti.com>
 ---
- tools/testing/selftests/lib.mk |    2 +-
+ tools/testing/selftests/lib.mk | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/tools/testing/selftests/lib.mk b/tools/testing/selftests/lib.mk
+index 959273c..3ea8b5a 100644
 --- a/tools/testing/selftests/lib.mk
 +++ b/tools/testing/selftests/lib.mk
 @@ -1,6 +1,6 @@
@@ -18,5 +21,8 @@ Signed-off-by: Denys Dmytriyenko <denys@ti.com>
 -CC := $(CROSS_COMPILE)gcc
 +CC ?= $(CROSS_COMPILE)gcc
  
- define RUN_TESTS
- 	@for TEST in $(TEST_PROGS); do \
+ ifeq (0,$(MAKELEVEL))
+ OUTPUT := $(shell pwd)
+-- 
+2.7.4
+

@@ -1,7 +1,7 @@
-From 4996976fcde4bb738ce68ca01a8b358d71aab7bb Mon Sep 17 00:00:00 2001
+From 66f82f5eee845cf96a3ffde66a31f8774ddd4507 Mon Sep 17 00:00:00 2001
 From: Michael Ellerman <mpe@ellerman.id.au>
 Date: Wed, 31 May 2017 20:40:15 +1000
-Subject: [PATCH 01/26] selftests: sync: Skip the test if kernel support is not
+Subject: [PATCH 03/50] selftests: sync: Skip the test if kernel support is not
  found
 
 The "Sync framework" test doesn't work if the kernel has no support,
@@ -17,7 +17,7 @@ Signed-off-by: Shuah Khan <shuahkh@osg.samsung.com>
  1 file changed, 13 insertions(+)
 
 diff --git a/tools/testing/selftests/sync/sync_test.c b/tools/testing/selftests/sync/sync_test.c
-index 9ea08d9f0b13..62fa666e501a 100644
+index 9ea08d9..62fa666 100644
 --- a/tools/testing/selftests/sync/sync_test.c
 +++ b/tools/testing/selftests/sync/sync_test.c
 @@ -29,6 +29,7 @@
@@ -52,5 +52,5 @@ index 9ea08d9f0b13..62fa666e501a 100644
  
  	err += RUN_TEST(test_alloc_timeline);
 -- 
-2.13.0
+2.7.4
 

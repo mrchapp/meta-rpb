@@ -3,21 +3,66 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 SRC_URI = "\
-    https://www.kernel.org/pub/linux/kernel/v4.x/linux-${PV}.tar.xz \
-    file://0001-selftests-lib-allow-to-override-CC-in-the-top-level-Makefile.patch \
-    file://0001-selftests-timers-use-LDLIBS-to-link-against-libpthread.patch \
-    file://0001-selftests-sigaltstack-fix-packaging.patch \
-    file://0001-selftests-seccomp-use-LDLIBS-to-link-against-libpthread.patch \
-    file://0001-selftests-gpio-use-pkg-config.patch \
-    file://0001-selftests-net-use-LDLIBS-to-link-against-libnuma.patch \
-    file://0001-selftests-breakpoints-allow-to-cross-compile-for-aar.patch;apply=no \
-    file://0001-selftests-sync-Skip-the-test-if-kernel-support-is-no.patch \
+    https://git.kernel.org/torvalds/t/linux-${PV}-rc7.tar.gz \
+    \
+    file://0001-selftests-futex-print-testcase-name-and-PASS-FAIL-ER.patch \
+    file://0002-selftests-vm-Fix-test-for-virtual-address-range-mapp.patch \
+    file://0003-selftests-sync-Skip-the-test-if-kernel-support-is-no.patch \
+    file://0004-selftests-Make-test_harness.h-more-generally-availab.patch \
+    file://0005-selftests-Cosmetic-renames-in-kselftest_harness.h.patch \
+    file://0006-Documentation-dev-tools-Add-kselftest.patch \
+    file://0007-Documentation-dev-tools-Use-reStructuredText-markups.patch \
+    file://0008-selftests-Remove-the-TEST_API-wrapper-from-kselftest.patch \
+    file://0009-Documentation-dev-tools-Add-kselftest_harness-docume.patch \
+    file://0010-selftests-seccomp-Force-rebuild-according-to-depende.patch \
+    file://0011-selftests-ftrace-Skip-full-glob-matching-filter-test.patch \
+    file://0012-selftests-ftrace-Reduce-trace-buffer-checking-overhe.patch \
+    file://0013-ftrace-kprobes-selftests-Check-kretprobe-maxactive-i.patch \
+    file://0014-selftests-ftrace-Reset-ftrace-filter-on-older-kernel.patch \
+    file://0015-selftests-ftrace-Add-instance-indication-in-test-log.patch \
+    file://0016-selftests-ftrace-Use-top-level-available_filter_func.patch \
+    file://0017-selftests-ftrace-Return-unsupported-if-it-detects-ol.patch \
+    file://0018-ksefltest-MAINTAINERS-git-tree-entry-is-incorrect.patch \
+    file://0019-kselftest-MAINTAINERS-git-tree-entry-update-files-an.patch \
+    file://0020-selftests-kselftest_harness-Fix-compile-warning.patch \
+    file://0021-kselftest-add-TAP13-conformant-versions-of-ksft_-fun.patch \
+    file://0022-kselftest-membarrier-convert-to-TAP13-output.patch \
+    file://0023-kselftest-breakpoints-convert-breakpoint_test-to-TAP.patch \
+    file://0024-kselftest-breakpoints-convert-step_after_suspend_tes.patch \
+    file://0025-kselftest-convert-get_size-to-use-stricter-TAP13-for.patch \
+    file://0026-kselftest-make-ksft_exit_skip-output-a-reason-for-sk.patch \
+    file://0027-kselftest-make-callers-of-ksft_exit_skip-output-the-.patch \
+    file://0028-kselftest-membarrier-make-test-names-more-informativ.patch \
+    file://0029-selftests-lib-Skip-tests-on-missing-test-modules.patch \
+    file://0030-selftest-memfd-Makefile-Fix-build-error.patch \
+    file://0031-selftest-intel_pstate-aperf-Use-LDLIBS-instead-of-LD.patch \
+    file://0032-selftest-net-Makefile-Specify-output-with-OUTPUT.patch \
+    file://0033-kselftest.rst-do-some-adjustments-after-ReST-convers.patch \
+    file://0034-tools-testing-selftests-sysctl-Add-pre-check-to-the-.patch \
+    file://0035-selftests-ftrace-Use-md5sum-to-take-less-time-of-che.patch \
+    file://0036-selftests-typo-correction-for-memory-hotplug-test.patch \
+    file://0037-selftests-check-hot-pluggagble-memory-for-memory-hot.patch \
+    file://0038-selftests-check-percentage-range-for-memory-hotplug-.patch \
+    file://0039-selftests-add-missing-test-name-in-memory-hotplug-te.patch \
+    file://0040-selftests-fix-memory-hotplug-test.patch \
+    file://0041-selftests-intel_pstate-add-.gitignore.patch \
+    \
+    file://gpio-fix-build-error.patch \
+    file://net-use-ldlibs-instead-of-ldflags.patch \
+    file://seccomp-use-ldlibs-instead-of-ldflags.patch \
+    file://timers-use-ldlibs-instead-of-ldflags.patch \
+    \
+    file://lib-allow-to-override-cc-in-the-top-level-.patch \
+    file://gpio-use-pkg-config.patch \
+    file://gpio-drop-extra-files-and-directories.patch \
+    file://fix-installation-for-splice-test.patch \
+    file://net-more-graceful-finding-of-ip.patch \
 "
 
-SRC_URI[md5sum] = "b5e7f6b9b2fe1b6cc7bc56a3a0bfc090"
-SRC_URI[sha256sum] = "3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b"
+SRC_URI[md5sum] = "c676a8ac90aead4fc982b39411815a98"
+SRC_URI[sha256sum] = "7d5c4c3b716fd40401c6b23f1a1007d0887385587cabe8c37eea910536d76eeb"
 
-S = "${WORKDIR}/linux-${PV}"
+S = "${WORKDIR}/linux-${PV}-rc7"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
@@ -47,6 +92,7 @@ PACKAGE_BEFORE_PN = " \
 	${PN}-bpf \
 	${PN}-breakpoints \
 	${PN}-capabilities \
+	${PN}-cpufreq \
 	${PN}-cpu-hotplug \
 	${PN}-efivarfs \
 	${PN}-exec \
@@ -54,6 +100,7 @@ PACKAGE_BEFORE_PN = " \
 	${PN}-ftrace \
 	${PN}-futex \
 	${PN}-gpio \
+	${PN}-intel-pstate \
 	${PN}-ipc \
 	${PN}-kcmp \
 	${PN}-lib \
@@ -70,6 +117,7 @@ PACKAGE_BEFORE_PN = " \
 	${PN}-seccomp \
 	${PN}-sigaltstack \
 	${PN}-size \
+	${PN}-splice \
 	${PN}-static-keys \
 	${PN}-sync \
 	${PN}-sysctl \
@@ -83,6 +131,7 @@ PACKAGE_BEFORE_PN = " \
 FILES_${PN}-bpf = "${bindir}/kselftests/bpf"
 FILES_${PN}-breakpoints = "${bindir}/kselftests/breakpoints"
 FILES_${PN}-capabilities = "${bindir}/kselftests/capabilities"
+FILES_${PN}-cpufreq = "${bindir}/kselftests/cpufreq"
 FILES_${PN}-cpu-hotplug = "${bindir}/kselftests/cpu-hotplug"
 FILES_${PN}-efivarfs = "${bindir}/kselftests/efivarfs"
 FILES_${PN}-exec = "${bindir}/kselftests/exec"
@@ -90,6 +139,7 @@ FILES_${PN}-firmware = "${bindir}/kselftests/firmware"
 FILES_${PN}-ftrace = "${bindir}/kselftests/ftrace"
 FILES_${PN}-futex = "${bindir}/kselftests/futex"
 FILES_${PN}-gpio = "${bindir}/kselftests/gpio"
+FILES_${PN}-intel-pstate = "${bindir}/kselftests/intel_pstate"
 FILES_${PN}-ipc = "${bindir}/kselftests/ipc"
 FILES_${PN}-kcmp = "${bindir}/kselftests/kcmp"
 FILES_${PN}-lib = "${bindir}/kselftests/lib"
@@ -106,6 +156,7 @@ FILES_${PN}-ptrace = "${bindir}/kselftests/ptrace"
 FILES_${PN}-seccomp = "${bindir}/kselftests/seccomp"
 FILES_${PN}-sigaltstack = "${bindir}/kselftests/sigaltstack"
 FILES_${PN}-size = "${bindir}/kselftests/size"
+FILES_${PN}-splice = "${bindir}/kselftests/splice"
 FILES_${PN}-static-keys = "${bindir}/kselftests/static_keys"
 FILES_${PN}-sync = "${bindir}/kselftests/sync"
 FILES_${PN}-sysctl = "${bindir}/kselftests/sysctl"
@@ -124,20 +175,30 @@ FILES_${PN}-dbg += "${bindir}/kselftests/*/.debug"
 # make[1]: *** [test_verifier] Error 1
 ALLOW_EMPTY_${PN}-bpf = "1"
 
+# FIXME breakpoints currently fails because of missing
+# symbols from glibc. C.f. this bug:
+#   https://sourceware.org/bugzilla/show_bug.cgi?id=21286
+ALLOW_EMPTY_${PN}-breakpoints = "1"
+
 # FIXME net target builds most of the binaries, but reuseport_bpf_numa depends on libnuma,
 # which is not availbale on ARM, failing entire test case
 ALLOW_EMPTY_${PN}-net = "1"
 
+RDEPENDS_${PN}-cpufreq += "bash"
 RDEPENDS_${PN}-cpu-hotplug += "bash"
 RDEPENDS_${PN}-efivarfs += "bash"
 RDEPENDS_${PN}-futex += "bash ncurses"
+RDEPENDS_${PN}-gpio += "bash"
+RDEPENDS_${PN}-intel-pstate += "bash"
+RDEPENDS_${PN}-memfd += "fuse"
 RDEPENDS_${PN}-memory-hotplug += "bash"
-RDEPENDS_${PN}-net += "bash"
+RDEPENDS_${PN}-net += "bash ethtool"
 RDEPENDS_${PN}-vm += "bash sudo"
 RDEPENDS_${PN}-zram += "bash bc"
 RDEPENDS_${PN} += "bash \
 	${PN}-bpf \
 	${PN}-capabilities \
+	${PN}-cpufreq \
 	${PN}-cpu-hotplug \
 	${PN}-efivarfs \
 	${PN}-exec \
@@ -159,6 +220,7 @@ RDEPENDS_${PN} += "bash \
 	${PN}-seccomp \
 	${PN}-sigaltstack \
 	${PN}-size \
+	${PN}-splice \
 	${PN}-static-keys \
 	${PN}-sync \
 	${PN}-sysctl \
@@ -169,8 +231,8 @@ RDEPENDS_${PN} += "bash \
 "
 
 RDEPENDS_${PN}_append_aarch64 = " ${PN}-breakpoints ${PN}-ipc"
-RDEPENDS_${PN}_append_x86 = " ${PN}-breakpoints ${PN}-ipc ${PN}-x86"
-RDEPENDS_${PN}_append_x86-64 = " ${PN}-breakpoints ${PN}-ipc ${PN}-x86"
+RDEPENDS_${PN}_append_x86 = " ${PN}-breakpoints ${PN}-intel-pstate ${PN}-ipc ${PN}-x86"
+RDEPENDS_${PN}_append_x86-64 = " ${PN}-breakpoints ${PN}-intel-pstate ${PN}-ipc ${PN}-x86"
 RDEPENDS_${PN}_append_powerpc = " ${PN}-powerpc"
 RDEPENDS_${PN}_append_powerpc64 = " ${PN}-powerpc"
 
