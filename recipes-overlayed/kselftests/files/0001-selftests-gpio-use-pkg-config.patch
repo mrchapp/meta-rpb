@@ -1,4 +1,5 @@
 From: Fathi Boudra <fathi.boudra@linaro.org>
+Date: Sun, 25 Jun 2017 09:45:04 -0500
 Subject: [PATCH] selftests: gpio: use pkg-config
 
 Signed-off-by: Fathi Boudra <fathi.boudra@linaro.org>

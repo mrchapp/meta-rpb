@@ -6,22 +6,23 @@ SRC_URI = "\
     https://www.kernel.org/pub/linux/kernel/v4.x/linux-${PV}.tar.xz \
     file://0001-selftests-lib-allow-to-override-CC-in-the-top-level-Makefile.patch \
     file://0001-selftests-timers-use-LDLIBS-to-link-against-libpthread.patch \
-    file://0001-selftests-sigaltstack-fix-packaging.patch \
     file://0001-selftests-seccomp-use-LDLIBS-to-link-against-libpthread.patch \
     file://0001-selftests-gpio-use-pkg-config.patch \
     file://0001-selftests-net-use-LDLIBS-to-link-against-libnuma.patch \
     file://0001-selftests-breakpoints-allow-to-cross-compile-for-aar.patch;apply=no \
     file://0001-selftests-sync-Skip-the-test-if-kernel-support-is-no.patch \
+    file://fix-building-of-gpio.patch \
+    file://use-ldlibs-for-proper-linking-of-memfd.patch \
 "
 
-SRC_URI[md5sum] = "b5e7f6b9b2fe1b6cc7bc56a3a0bfc090"
-SRC_URI[sha256sum] = "3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b"
+SRC_URI[md5sum] = "251a5deee0fa6daf3f356b1bbda9eab8"
+SRC_URI[sha256sum] = "b67ecafd0a42b3383bf4d82f0850cbff92a7e72a215a6d02f42ddbafcf42a7d6"
 
 S = "${WORKDIR}/linux-${PV}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-DEPENDS = "libcap libcap-ng pkgconfig-native popt rsync-native util-linux \
+DEPENDS = "fuse libcap libcap-ng pkgconfig-native popt rsync-native util-linux \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "", "numactl", d)} \
 "
 
@@ -47,6 +48,7 @@ PACKAGE_BEFORE_PN = " \
 	${PN}-bpf \
 	${PN}-breakpoints \
 	${PN}-capabilities \
+	${PN}-cpufreq \
 	${PN}-cpu-hotplug \
 	${PN}-efivarfs \
 	${PN}-exec \
@@ -83,6 +85,7 @@ PACKAGE_BEFORE_PN = " \
 FILES_${PN}-bpf = "${bindir}/kselftests/bpf"
 FILES_${PN}-breakpoints = "${bindir}/kselftests/breakpoints"
 FILES_${PN}-capabilities = "${bindir}/kselftests/capabilities"
+FILES_${PN}-cpufreq = "${bindir}/kselftests/cpufreq"
 FILES_${PN}-cpu-hotplug = "${bindir}/kselftests/cpu-hotplug"
 FILES_${PN}-efivarfs = "${bindir}/kselftests/efivarfs"
 FILES_${PN}-exec = "${bindir}/kselftests/exec"
@@ -128,9 +131,11 @@ ALLOW_EMPTY_${PN}-bpf = "1"
 # which is not availbale on ARM, failing entire test case
 ALLOW_EMPTY_${PN}-net = "1"
 
+RDEPENDS_${PN}-cpufreq += "bash"
 RDEPENDS_${PN}-cpu-hotplug += "bash"
 RDEPENDS_${PN}-efivarfs += "bash"
 RDEPENDS_${PN}-futex += "bash ncurses"
+RDEPENDS_${PN}-gpio += "bash"
 RDEPENDS_${PN}-memory-hotplug += "bash"
 RDEPENDS_${PN}-net += "bash"
 RDEPENDS_${PN}-vm += "bash sudo"
@@ -138,6 +143,7 @@ RDEPENDS_${PN}-zram += "bash bc"
 RDEPENDS_${PN} += "bash \
 	${PN}-bpf \
 	${PN}-capabilities \
+	${PN}-cpufreq \
 	${PN}-cpu-hotplug \
 	${PN}-efivarfs \
 	${PN}-exec \
