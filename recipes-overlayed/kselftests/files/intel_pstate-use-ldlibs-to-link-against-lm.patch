@@ -1,0 +1,29 @@
+From 2c847b1c18b77ef9195651bbc4fb5a24e8c1346a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>
+Date: Wed, 28 Jun 2017 10:31:39 -0500
+Subject: [PATCH] selftests: intel_pstate: use LDLIBS to link against lm
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Use LDLIBS to properly link against lm.
+
+Signed-off-by: Daniel Díaz <daniel.diaz@linaro.org>
+---
+ tools/testing/selftests/intel_pstate/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/testing/selftests/intel_pstate/Makefile b/tools/testing/selftests/intel_pstate/Makefile
+index 19678e9..849a90f 100644
+--- a/tools/testing/selftests/intel_pstate/Makefile
++++ b/tools/testing/selftests/intel_pstate/Makefile
+@@ -1,5 +1,5 @@
+ CFLAGS := $(CFLAGS) -Wall -D_GNU_SOURCE
+-LDFLAGS := $(LDFLAGS) -lm
++LDLIBS := $(LDLIBS) -lm
+ 
+ TEST_GEN_FILES := msr aperf
+ 
+-- 
+2.7.4
+

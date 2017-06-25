@@ -1,0 +1,32 @@
+From e9150b6da588f561c761cce0a976d6ab5c07c69e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>
+Date: Wed, 28 Jun 2017 11:53:16 -0500
+Subject: [PATCH] selftests: net: More graceful finding of `ip'.
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The ip tool might be provided by another package (such as
+Busybox), not necessarily implementing the -Version switch.
+
+Signed-off-by: Daniel Díaz <daniel.diaz@linaro.org>
+---
+ tools/testing/selftests/net/netdevice.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/testing/selftests/net/netdevice.sh b/tools/testing/selftests/net/netdevice.sh
+index 4e00568..ee5926e 100755
+--- a/tools/testing/selftests/net/netdevice.sh
++++ b/tools/testing/selftests/net/netdevice.sh
+@@ -178,7 +178,7 @@ if [ "$(id -u)" -ne 0 ];then
+ 	exit 0
+ fi
+ 
+-ip -Version 2>/dev/null >/dev/null
++type ip 2>/dev/null >/dev/null
+ if [ $? -ne 0 ];then
+ 	echo "SKIP: Could not run test without the ip tool"
+ 	exit 0
+-- 
+2.7.4
+
