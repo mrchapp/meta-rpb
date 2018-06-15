@@ -8,5 +8,9 @@ RDEPENDS_packagegroup-rpb-lkft = "\
     kernel-selftests \
     kselftests-mainline \
     kselftests-next \
+    ltp \
     ${@bb.utils.contains("TARGET_ARCH", "arm", "", "numactl", d)} \
+    packagegroup-core-buildessential \
+    packagegroup-core-tools-debug \
+    tzdata \
     "
