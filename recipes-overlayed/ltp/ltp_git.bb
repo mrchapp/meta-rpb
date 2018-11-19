@@ -22,7 +22,7 @@ CFLAGS_append_powerpc64 = " -D__SANE_USERSPACE_TYPES__"
 CFLAGS_append_mipsarchn64 = " -D__SANE_USERSPACE_TYPES__"
 
 SRCREV = "${AUTOREV}"
-PV = "20180118+git${SRCPV}"
+PV = "20180926+git${SRCPV}"
 
 DEFAULT_PREFERENCE = "-1"
 
